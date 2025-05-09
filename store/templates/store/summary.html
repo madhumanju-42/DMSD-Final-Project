@@ -1,0 +1,10 @@
+{% extends 'store/base.html' %}
+{% block content %}
+<h2>Your Orders</h2>
+<ul>
+  {% for txn in transactions %}
+    <li>{{ txn.transaction_date }} - ${{ txn.basket.appearsin_set.first.price_sold }} - {{ txn.transaction_tag }}</li>
+  {% endfor %}
+</ul>
+<a href="{% url 'product_list' %}">Back to Products</a>
+{% endblock %}

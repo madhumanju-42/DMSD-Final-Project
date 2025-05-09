@@ -1,0 +1,37 @@
+{% extends 'store/base.html' %}
+{% block content %}
+<h2 class="mb-4">📃 Transaction History</h2>
+
+{% if transactions %}
+<table class="table table-bordered table-striped align-middle">
+  <thead class="table-light">
+    <tr>
+      <th>Date</th>
+      <th>Status</th>
+      <th>Basket ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for txn in transactions %}
+      <tr>
+        <td>{{ txn.tdate }}</td>
+        <td>
+          {% if txn.ttag == 'Pending' %}
+            <span class="badge bg-warning text-dark">Pending</span>
+          {% elif txn.ttag == 'Delivered' %}
+            <span class="badge bg-success">Delivered</span>
+          {% elif txn.ttag == 'Not Delivered' %}
+            <span class="badge bg-danger">Failed</span>
+          {% else %}
+            <span class="badge bg-secondary">{{ txn.ttag }}</span>
+          {% endif %}
+        </td>
+        <td>#{{ txn.bid }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+  <div class="alert alert-info">No transactions found.</div>
+{% endif %}
+{% endblock %}

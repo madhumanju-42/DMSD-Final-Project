@@ -1,0 +1,111 @@
+{% extends 'store/base.html' %}
+{% block content %}
+<h2>Sales Statistics</h2>
+
+<!-- Query 1 -->
+<form method="post">{% csrf_token %}
+  <input type="hidden" name="which_query" value="query1">
+  <p>1. Compute the total amount charged per credit card.</p>
+  <button type="submit">Execute</button>
+</form>
+{% if stats.query1 %}
+  <div style="margin-top:1rem">
+    <strong>Result:</strong>
+    <table border="1">
+      <tr><th>Card Number</th><th>Total Amount Charged</th></tr>
+      {% for cc, total in stats.query1 %}
+        <tr><td>{{ cc }}</td><td>{{ total }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+{% endif %}
+<hr>
+
+<!-- Query 2 -->
+<form method="post">{% csrf_token %}
+  <input type="hidden" name="which_query" value="query2">
+  <p>2. Compute the 10 best customers (in terms of money spent).</p>
+  <button type="submit">Execute</button>
+</form>
+{% if stats.query2 %}
+  <table border="1">
+    <tr><th>Customer ID</th><th>Name</th><th>Total</th></tr>
+    {% for cid, name, total in stats.query2 %}
+      <tr><td>{{ cid }}</td><td>{{ name }}</td><td>{{ total }}</td></tr>
+    {% endfor %}
+  </table>
+{% endif %}
+<hr>
+
+<!-- Query 3 -->
+<form method="post">{% csrf_token %}
+  <input type="hidden" name="which_query" value="query3">
+  <p>3. Compute the most frequently sold products in a given date range:</p>
+  <input type="date" name="start">
+  <input type="date" name="end">
+  <button type="submit">Execute</button>
+</form>
+{% if stats.query3 %}
+  <table border="1">
+    <tr><th>Product ID</th><th>Name</th><th>Frequency</th></tr>
+    {% for pid, pname, freq in stats.query3 %}
+      <tr><td>{{ pid }}</td><td>{{ pname }}</td><td>{{ freq }}</td></tr>
+    {% endfor %}
+  </table>
+{% endif %}
+<hr>
+
+<!-- Query 4 -->
+<form method="post">{% csrf_token %}
+  <input type="hidden" name="which_query" value="query4">
+  <p>4. Products sold to the highest number of distinct customers:</p>
+  <input type="date" name="start">
+  <input type="date" name="end">
+  <button type="submit">Execute</button>
+</form>
+{% if stats.query4 %}
+  <table border="1" class="gap-4">
+    <tr><th>Product ID</th><th>Name</th><th>Unique Customers</th></tr>
+    {% for pid, pname, count in stats.query4 %}
+      <tr><td>{{ pid }}</td><td>{{ pname }}</td><td>{{ count }}</td></tr>
+    {% endfor %}
+  </table>
+{% endif %}
+<hr>
+
+<!-- Query 5 -->
+<form method="post">{% csrf_token %}
+  <input type="hidden" name="which_query" value="query5">
+  <p>5. Max basket total per credit card in date range:</p>
+  <input type="date" name="start">
+  <input type="date" name="end">
+  <button type="submit">Execute</button>
+</form>
+{% if stats.query5 %}
+  <table border="1">
+    <tr><th>Card Number</th><th>Max Basket Total</th></tr>
+    {% for card, maxval in stats.query5 %}
+      <tr><td>{{ card }}</td><td>{{ maxval }}</td></tr>
+    {% endfor %}
+  </table>
+{% endif %}
+<hr>
+
+<!-- Query 6 -->
+<form method="post">{% csrf_token %}
+  <input type="hidden" name="which_query" value="query6">
+  <p>6. Average selling price per product type in date range:</p>
+  <input type="date" name="start">
+  <input type="date" name="end">
+  <button type="submit">Execute</button>
+</form>
+{% if stats.query6 %}
+  <table border="1">
+    <tr><th>Product Type</th><th>Avg Price</th></tr>
+    {% for ptype, avg in stats.query6 %}
+      <tr><td>{{ ptype }}</td><td>{{ avg }}</td></tr>
+    {% endfor %}
+  </table>
+{% endif %}
+
+{% endblock %}

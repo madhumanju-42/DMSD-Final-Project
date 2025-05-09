@@ -1,0 +1,26 @@
+{% extends 'store/base.html' %}
+{% block content %}
+<h2>Your Basket</h2>
+<table class="table table-bordered table-hover">
+  <thead class="table-light">
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Price (Each)</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+      <tr>
+        <td>{{ item.pname }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>${{ item.pricesold }}</td>
+        <td>${{ item.total}}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<p class="fw-bold">Total: ${{ total }}</p>
+<a href="{% url 'checkout' %}" class="btn btn-primary">Proceed to Checkout</a>
+{% endblock %}

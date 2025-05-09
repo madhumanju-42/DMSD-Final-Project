@@ -1,0 +1,24 @@
+{% extends 'store/base.html' %}
+{% block content %}
+<h2 class="mb-4">🛍 Available Products</h2>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+  {% for product in products %}
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">{{ product.pname }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{ product.ptype }}</h6>
+          <p class="card-text">{{ product.pdesc|default:"No description." }}</p>
+          <p><strong>Price:</strong> ${{ product.pprice }}</p>
+          <a href="{% url 'add_to_basket' product.pid %}" class="btn btn-outline-primary btn-sm">➕ Add to Basket</a>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <div class="col">
+      <div class="alert alert-warning">No products available.</div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

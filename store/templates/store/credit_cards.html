@@ -1,0 +1,61 @@
+{% extends 'store/base.html' %}
+{% block content %}
+<h2 class="mb-4">💳 Your Credit Cards</h2>
+
+<!-- Existing Cards -->
+<table class="table table-bordered table-hover">
+  <thead class="table-light">
+    <tr>
+      <th>Card Number</th>
+      <th>Type</th>
+      <th>Owner</th>
+      <th>Billing Address</th>
+      <th>Expiry</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for card in cards %}
+      <tr>
+        <td>{{ card.ccnumber }}</td>
+        <td>{{ card.cctype }}</td>
+        <td>{{ card.ownername }}</td>
+        <td>{{ card.biladdress }}</td>
+        <td>{{ card.expdate }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- Add New Card Form -->
+<h4 class="mt-5">➕ Add a New Credit Card</h4>
+<form method="post" class="row g-3">
+  {% csrf_token %}
+  <div class="col-md-6">
+    <label class="form-label">Card Number</label>
+    <input type="text" class="form-control" name="ccnumber" required>
+  </div>
+  <div class="col-md-3">
+    <label class="form-label">CVV</label>
+    <input type="text" class="form-control" name="secnumber" required>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Card Owner Name</label>
+    <input type="text" class="form-control" name="ownername" required>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Card Type</label>
+    <input type="text" class="form-control" name="cctype" required>
+  </div>
+  <div class="col-md-8">
+    <label class="form-label">Billing Address</label>
+    <input type="text" class="form-control" name="biladdress" required>
+  </div>
+  <div class="col-md-4">
+    <label class="form-label">Expiry Date</label>
+    <input type="date" class="form-control" name="expdate" required>
+  </div>
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Add Card</button>
+  </div>
+</form>
+{% endblock %}
